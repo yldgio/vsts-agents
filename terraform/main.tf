@@ -1,5 +1,18 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = ">=2.46.0"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
 resource "azurerm_resource_group" "aci_rg" {
-  name     = "aci_vsts"
+  name     = var.rg_name
   location = var.location
 }
 
@@ -9,11 +22,11 @@ resource "random_id" "randomId" {
     resource_group = azurerm_resource_group.aci_rg.name
   }
 
-  byte_length = 8
+  byte_length = 4
 }
 
 resource "azurerm_storage_account" "aci_sa" {
-  name                = "acisa${random_id.randomId.hex}"
+  name                = "${var.name_prefix}stac${random_id.randomId.hex}"
   resource_group_name = azurerm_resource_group.aci_rg.name
   location            = azurerm_resource_group.aci_rg.location
   account_tier        = "Standard"
@@ -22,8 +35,7 @@ resource "azurerm_storage_account" "aci_sa" {
 }
 
 resource "azurerm_storage_share" "aci_share" {
-  name                 = "aci_vsts_share"
-  resource_group_name  = azurerm_resource_group.aci_rg.name
+  name                 = "${var.name_prefix}stacshare"
   storage_account_name = azurerm_storage_account.aci_sa.name
 
   quota = 50
@@ -39,11 +51,14 @@ resource "azurerm_container_group" "aci_vsts" {
   container {
     name   = var.container_name
     image  = var.container_image
-    cpu    = "0.5"
+    cpu    = "1"
     memory = "1.5"
-    port   = "80"
 
-    environment_variables {
+    ports {
+      port     = 80 #443
+      protocol = "TCP"
+    }
+    environment_variables = {
       "VSTS_ACCOUNT" = var.vsts_account
       "VSTS_TOKEN"   = var.vsts_token
       "VSTS_AGENT"   = var.vsts_agent
@@ -61,7 +76,7 @@ resource "azurerm_container_group" "aci_vsts" {
     }
   }
 
-  tags {
+  tags = {
     environment = "develop"
   }
 }

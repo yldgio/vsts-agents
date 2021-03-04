@@ -1,18 +1,26 @@
+variable "rg_name" {
+  description = "Azure resource group Name"
+  default = "aci_vsts"
+}
+variable "name_prefix" {
+  description = "Azure resource group Name"
+  default = "aci_"
+}
 variable "vsts_account" {
-  description = "Azuree Devops Organization Name"
+  description = "Azure Devops Organization Name"
 }
 
 variable "vsts_token" {
-  description = "Azuree Devops Personal access Token"
+  description = "Azure Devops Personal access Token"
 }
 
 variable "vsts_agent" {
-  description = "Azuree Devops Agent Name"
+  description = "Azure Devops Agent Name"
   default = "ACI-Agent"
 }
 
 variable "vsts_pool" {
-  description = "Azuree Devops Agent Pool Name"
+  description = "Azure Devops Agent Pool Name"
   default = "ACI-Pool"
 }
 variable "container_group_name"{
