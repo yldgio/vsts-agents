@@ -16,12 +16,14 @@ if [ -z "$VSTS_TOKEN_FILE" ]; then
 fi
 unset VSTS_TOKEN
 
-
-rm -rf /vsts/agent
-mkdir /vsts/agent
-cd /vsts/agent
 export AGENT_ALLOW_RUNASROOT="1"
+print_header() {
+  lightcyan='\033[1;36m'
+  nocolor='\033[0m'
+  echo -e "${lightcyan}$1${nocolor}"
+}
 cleanup() {
+  cd /vsts/agent
   if [ -e config.sh ]; then
     print_header "Cleanup. Removing Azure Pipelines agent..."
 
@@ -29,12 +31,16 @@ cleanup() {
       --auth PAT \
       --token $(cat "$VSTS_TOKEN_FILE")
   fi
+  print_header "Cleanup. Removing directory..."
+  rm -rf /vsts/agent
 }
-print_header() {
-  lightcyan='\033[1;36m'
-  nocolor='\033[0m'
-  echo -e "${lightcyan}$1${nocolor}"
-}
+if [ -d "/vsts/agent" ]; then
+  cleanup
+fi
+mkdir /vsts/agent
+cd /vsts/agent
+
+
 print_header "downloading Azure Pipelines agent..."
 export VSTS_URL="https://dev.azure.com/$VSTS_ACCOUNT"
 
