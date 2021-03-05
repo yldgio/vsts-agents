@@ -32,6 +32,13 @@ variable "container_name" {
   description = "the name of the container"
   default = "vsts-agent"
 }
+variable "container_cpu" {
+  default = "1"
+}
+variable "container_memory" {
+  default = "1.5"
+}
+
 variable "container_image" {
   description = "docker image"
   default = "yldgio/vsts-agent:centos-7"

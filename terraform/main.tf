@@ -51,8 +51,8 @@ resource "azurerm_container_group" "aci_vsts" {
   container {
     name   = var.container_name
     image  = var.container_image
-    cpu    = "1"
-    memory = "1.5"
+    cpu    = var.container_cpu
+    memory = var.container_memory
 
     ports {
       port     = 80 #443
