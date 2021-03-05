@@ -6,3 +6,6 @@
 *.tfstate*
 .env*
 *.log
+terraform/*.tfvars
+terraform/.*.hcl
+terraform/*.out
