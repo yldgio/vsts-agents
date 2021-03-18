@@ -4,7 +4,7 @@ FROM centos:centos7.5.1804
 
 LABEL org.label-schema.name="VSTS Agent with Infrastrucure Tools" \
     org.label-schema.url="https://github.com/yldgio/" \
-    org.label-schema.vcs-url="https://github.com/yldgio/vsts-agent-infrastructure" \
+    org.label-schema.vcs-url="https://github.com/yldgio/vsts-agents" \
     org.label-schema.schema-version="1.0"
                 
 RUN /bin/bash -c "yum update -y"
