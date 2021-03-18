@@ -4,6 +4,8 @@ This repository was originally forked from [lenisha/vsts-agent-infrastructure](h
 
 contains `Dockerfile` definitions for [yldgio/vsts-agents](https://github.com/yldgio/vsts-agents) centos agent Docker images and the terraform configuration to deploy them in Azure Container Instances
 
+contains also base container images for hosted [Container Jobs Pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops)
+
 the agents images can be built via
 
 `docker build . -t vsts-agent:centos-7`
