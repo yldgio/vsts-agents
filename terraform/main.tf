@@ -45,8 +45,8 @@ resource "azurerm_container_group" "aci_vsts" {
   name                = var.container_group_name
   location            = azurerm_resource_group.aci_rg.location
   resource_group_name = azurerm_resource_group.aci_rg.name
-  ip_address_type     = "public"
-  os_type             = "linux"
+  ip_address_type     = "Public"
+  os_type             = "Linux"
 
   container {
     name   = var.container_name
